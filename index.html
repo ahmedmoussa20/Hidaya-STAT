@@ -90,6 +90,12 @@ main{padding:22px clamp(12px,1.6vw,26px) 34px}.topbar{align-items:center;margin-
 @media(max-width:760px){.overview-platform-grid{grid-template-columns:minmax(0,1fr)}.overview-country-table{min-width:430px}.overview-platform-grid .country-code{display:inline-grid}.platform-logo-svg{width:29px;height:29px}.table-wrap{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}}
 @media(max-width:420px){.overview-country-table{min-width:410px}.country-flag{width:23px}}
 
+
+/* Use real flag images: Windows/Chrome may render flag emoji as letter badges. */
+.country-flag-img{display:inline-block;width:25px;height:17px;object-fit:cover;flex:none;border-radius:2px;box-shadow:0 0 0 1px #00000018}
+.country-flag-fallback{display:inline-flex;width:25px;height:17px;align-items:center;justify-content:center;font-size:17px;line-height:1;flex:none;overflow:hidden}
+@media(max-width:760px){.country-flag-img,.country-flag-fallback{width:23px;height:16px}}
+
 </style>
 </head>
 <body>
@@ -330,8 +336,15 @@ function displayTerritoryName(territory,code){
 }
 function countryLabel(code){const n=countryNames(code);return `${n.en} / ${n.ar} (${code})`}
 function countryNameMarkup(code){
- const c=String(code||"—").toUpperCase(),n=countryNames(c),flag=flagEmoji(c);
- return `<div class="country-name"><span class="country-flag" role="img" aria-label="${n.en} flag" title="${n.en}">${flag}</span><span class="country-code">${c}</span><span class="country-identity"><span><span class="country-en">${n.en}</span><span class="country-ar" lang="ar" dir="rtl">${n.ar}</span></span></span></div>`;
+ const c=String(code||"—").toUpperCase(),n=countryNames(c);
+ const aliases={"IL":"ps","PS":"ps","RUSSIA":"ru","CÔTE D’IVOIRE":"ci","CÔTE D'IVOIRE":"ci"};
+ const flagCode=aliases[c]||( /^[A-Z]{2}$/.test(c)?c.toLowerCase():"");
+ const flagUrl=flagCode?`https://flagcdn.com/w40/${flagCode}.png`:"";
+ const fallback=flagEmoji(c);
+ const flag=flagUrl
+   ? `<img class="country-flag-img" src="${flagUrl}" alt="${n.en} flag" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="country-flag-fallback" role="img" aria-label="${n.en} flag" hidden>${fallback}</span>`
+   : `<span class="country-flag-fallback" role="img" aria-label="${n.en} flag">${fallback}</span>`;
+ return `<div class="country-name">${flag}<span class="country-code">${c}</span><span class="country-identity"><span><span class="country-en">${n.en}</span><span class="country-ar" lang="ar" dir="rtl">${n.ar}</span></span></span></div>`;
 }
 function drawCountries(){const rows=countryAgg(),total=rows.reduce((a,x)=>a+x.deviceInstalls,0);$("topCountries").innerHTML=rows.slice(0,10).map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${countryNameMarkup(r.code)}</td><td class="num">${fmt(r.deviceInstalls)}</td><td><div class="barline"><i style="width:${total?r.deviceInstalls/total*100:0}%"></i></div></td></tr>`).join("")||'<tr><td colspan="4" class="empty">No country data</td></tr>';
 $("countriesTable").innerHTML=rows.map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${countryNameMarkup(r.code)}</td><td class="num">${fmt(r.deviceInstalls)}</td><td class="num">${fmt(r.userInstalls)}</td><td class="num">${fmt(r.installEvents)}</td><td><div class="barline"><i style="width:${total?r.deviceInstalls/total*100:0}%"></i></div></td></tr>`).join("")||'<tr><td colspan="6" class="empty">No country data</td></tr>';
