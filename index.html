@@ -108,6 +108,10 @@ main{padding:22px clamp(12px,1.6vw,26px) 34px}.topbar{align-items:center;margin-
 .country-flag-fallback{width:25px;height:17px;display:inline-flex;align-items:center;justify-content:center;flex:none;font-size:17px;line-height:1}
 @media(max-width:760px){.country-name{gap:8px}.country-flag-img,.country-flag-fallback{width:23px;height:16px}}
 
+
+/* Fix mobile duplicate flags: component display rules must not override the HTML hidden attribute. */
+.country-flag-fallback[hidden]{display:none!important}
+
 </style>
 </head>
 <body>
