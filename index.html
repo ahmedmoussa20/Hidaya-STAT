@@ -96,6 +96,18 @@ main{padding:22px clamp(12px,1.6vw,26px) 34px}.topbar{align-items:center;margin-
 .country-flag-fallback{display:inline-flex;width:25px;height:17px;align-items:center;justify-content:center;font-size:17px;line-height:1;flex:none;overflow:hidden}
 @media(max-width:760px){.country-flag-img,.country-flag-fallback{width:23px;height:16px}}
 
+
+/* Clean country labels: flag + bilingual name, without decorative code badges */
+.country-name{display:flex;align-items:center;gap:9px;min-width:0}
+.country-identity{display:flex;align-items:center;min-width:0}
+.country-identity>span{min-width:0}
+.country-en{display:block;font-weight:650;color:var(--text)}
+.country-ar{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+.country-code{display:none!important}
+.country-flag-img{width:25px;height:17px;object-fit:cover;flex:none;border-radius:2px;box-shadow:0 0 0 1px #00000018}
+.country-flag-fallback{width:25px;height:17px;display:inline-flex;align-items:center;justify-content:center;flex:none;font-size:17px;line-height:1}
+@media(max-width:760px){.country-name{gap:8px}.country-flag-img,.country-flag-fallback{width:23px;height:16px}}
+
 </style>
 </head>
 <body>
@@ -344,7 +356,7 @@ function countryNameMarkup(code){
  const flag=flagUrl
    ? `<img class="country-flag-img" src="${flagUrl}" alt="${n.en} flag" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="country-flag-fallback" role="img" aria-label="${n.en} flag" hidden>${fallback}</span>`
    : `<span class="country-flag-fallback" role="img" aria-label="${n.en} flag">${fallback}</span>`;
- return `<div class="country-name">${flag}<span class="country-code">${c}</span><span class="country-identity"><span><span class="country-en">${n.en}</span><span class="country-ar" lang="ar" dir="rtl">${n.ar}</span></span></span></div>`;
+ return `<div class="country-name">${flag}<span class="country-identity"><span><span class="country-en">${n.en}</span><span class="country-ar" lang="ar" dir="rtl">${n.ar}</span></span></span></div>`;
 }
 function drawCountries(){const rows=countryAgg(),total=rows.reduce((a,x)=>a+x.deviceInstalls,0);$("topCountries").innerHTML=rows.slice(0,10).map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${countryNameMarkup(r.code)}</td><td class="num">${fmt(r.deviceInstalls)}</td><td><div class="barline"><i style="width:${total?r.deviceInstalls/total*100:0}%"></i></div></td></tr>`).join("")||'<tr><td colspan="4" class="empty">No country data</td></tr>';
 $("countriesTable").innerHTML=rows.map((r,i)=>`<tr><td class="rank">${i+1}</td><td>${countryNameMarkup(r.code)}</td><td class="num">${fmt(r.deviceInstalls)}</td><td class="num">${fmt(r.userInstalls)}</td><td class="num">${fmt(r.installEvents)}</td><td><div class="barline"><i style="width:${total?r.deviceInstalls/total*100:0}%"></i></div></td></tr>`).join("")||'<tr><td colspan="6" class="empty">No country data</td></tr>';
