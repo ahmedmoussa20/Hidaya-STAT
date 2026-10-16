@@ -112,6 +112,30 @@ main{padding:22px clamp(12px,1.6vw,26px) 34px}.topbar{align-items:center;margin-
 /* Fix mobile duplicate flags: component display rules must not override the HTML hidden attribute. */
 .country-flag-fallback[hidden]{display:none!important}
 
+
+/* Safe polish: restrained motion, hover feedback, and reduced-motion support */
+@keyframes hidayaFadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes hidayaSoftIn{from{opacity:0}to{opacity:1}}
+body{animation:hidayaSoftIn .42s ease-out both}
+.sidebar{transition:transform .24s ease,box-shadow .24s ease}
+.brand{animation:hidayaFadeUp .45s ease-out both}
+.nav button{transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease}
+.nav button:hover{transform:translateX(3px)}
+.card,.filters,.notice,.dict-item{animation:hidayaFadeUp .42s ease-out both;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.kpis>.kpi:nth-child(2){animation-delay:.04s}
+.kpis>.kpi:nth-child(3){animation-delay:.08s}
+.kpis>.kpi:nth-child(4){animation-delay:.12s}
+.card:hover{transform:translateY(-2px);box-shadow:0 13px 30px rgba(30,55,40,.11);border-color:#d8c48e}
+.btn,.control,.chart-tabs button,.calendar-btn{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease}
+.btn:hover{transform:translateY(-1px)}
+.chart{animation:hidayaSoftIn .55s ease-out both}
+.chart path,.chart polyline,.chart line{transition:opacity .2s ease}
+tbody tr{transition:background-color .18s ease}
+.barline i{transform-origin:left center;animation:hidayaBarIn .7s cubic-bezier(.2,.75,.25,1) both}
+@keyframes hidayaBarIn{from{transform:scaleX(.05);opacity:.45}to{transform:scaleX(1);opacity:1}}
+[dir=rtl] .nav button:hover{transform:translateX(-3px)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
@@ -408,5 +432,13 @@ $("nav").addEventListener("click",e=>{let b=e.target.closest("button[data-sectio
 $("androidMetric").addEventListener("change",()=>setKpis());$("iosMetric").addEventListener("change",()=>setKpis());
 document.addEventListener("click",e=>{const b=e.target.closest("[data-tip]");const box=$("metricTooltip");if(b){const t=b.dataset.tooltipText||b.title||"Metric definition";box.innerHTML=`<button type="button" aria-label="Close definition">×</button>${t}`;box.hidden=false;box.querySelector("button").addEventListener("click",()=>box.hidden=true);return}if(!e.target.closest("#metricTooltip"))box.hidden=true;});
 populate();render();
+
+/* Gentle browser-level deterrents only; this does not secure or hide source code. */
+document.addEventListener("contextmenu",function(e){e.preventDefault()});
+document.addEventListener("keydown",function(e){
+  const key=(e.key||"").toLowerCase();
+  if((e.ctrlKey||e.metaKey)&&key==="u"){e.preventDefault();e.stopPropagation()}
+});
+
 </script>
 </body></html>
