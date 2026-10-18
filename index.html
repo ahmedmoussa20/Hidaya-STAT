@@ -136,6 +136,52 @@ tbody tr{transition:background-color .18s ease}
 [dir=rtl] .nav button:hover{transform:translateX(-3px)}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
+
+/* Executive Overview UI polish — presentation only; no data or calculation changes */
+#section-overview{--ov-green:#073f2f;--ov-green-2:#0c6045;--ov-gold:#c8a34c;position:relative}
+#section-overview .overview-intro{position:relative;isolation:isolate;overflow:hidden;align-items:center;margin:0 0 16px;padding:24px 26px;border:1px solid #d8c58d;border-radius:18px;background:radial-gradient(ellipse at 88% 8%,rgba(202,166,77,.20),transparent 34%),linear-gradient(115deg,#073c2d 0%,#0b513a 62%,#123e30 100%);box-shadow:0 12px 30px rgba(8,54,39,.12)}
+#section-overview .overview-intro:after{content:"";position:absolute;z-index:-1;right:-24px;top:-74px;width:250px;height:250px;border:1px solid rgba(223,194,115,.25);border-radius:50%;box-shadow:0 0 0 18px rgba(223,194,115,.045),0 0 0 38px rgba(223,194,115,.035),0 0 0 58px rgba(223,194,115,.025)}
+#section-overview .overview-intro h2{color:#fff8e8;font-size:clamp(25px,2.1vw,34px);letter-spacing:-.6px}
+#section-overview .overview-intro p{color:#d6e4d9;font-size:13px;max-width:62ch;line-height:1.6}
+#section-overview .overview-legend{position:relative;z-index:1;gap:9px;flex-wrap:wrap}
+#section-overview .overview-legend span{padding:8px 11px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.07);color:#f5f0df;font-size:11px}
+#section-overview .overview-legend .legend-dot{width:8px;height:8px;box-shadow:0 0 0 3px rgba(255,255,255,.08)}
+#section-overview .overview-platform-grid{gap:16px;align-items:stretch}
+#section-overview .platform-overview{border:1px solid #e4d9bd;border-radius:17px;background:linear-gradient(180deg,#fffdf8,#fffaf0);box-shadow:0 8px 24px rgba(34,48,33,.055);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+#section-overview .platform-overview:hover{transform:translateY(-2px);box-shadow:0 13px 30px rgba(34,48,33,.09);border-color:#d7c17f}
+#section-overview .overview-platform-head{padding:17px 18px;background:linear-gradient(110deg,#e8f3e9,#f7f5e9);border-bottom:1px solid #dce8d9}
+#section-overview .ios-panel .overview-platform-head{background:linear-gradient(110deg,#fbf1dc,#f8f5eb);border-bottom-color:#eadbb9}
+#section-overview .overview-brand-icon{width:46px;height:46px;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75)}
+#section-overview .overview-brand-text h2{font-size:22px;letter-spacing:-.3px}
+#section-overview .data-frequency{font-size:10px;font-weight:650;padding:7px 10px}
+#section-overview .overview-panel-content{padding:15px;gap:13px}
+#section-overview .primary-metric{padding:17px;border-radius:14px;border-color:#dce9dc;background:linear-gradient(125deg,#f0f8f0,#fffdf7)}
+#section-overview .ios-primary{border-color:#eadbb9;background:linear-gradient(125deg,#fcf3df,#fffdf8)}
+#section-overview .primary-icon{width:50px;height:50px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.65)}
+#section-overview .primary-title-row h3{font-size:16px}
+#section-overview .primary-value{font-size:clamp(30px,2.5vw,40px);font-variant-numeric:tabular-nums;letter-spacing:-1px}
+#section-overview .primary-definition{font-size:11px;line-height:1.6}
+#section-overview .android-mini-metric,#section-overview .ios-mini-metric{border-radius:12px;padding:13px;background:#fffefa;box-shadow:0 2px 8px rgba(19,48,31,.025)}
+#section-overview .android-mini-metric strong,#section-overview .ios-mini-metric strong{font-size:24px;font-variant-numeric:tabular-nums}
+#section-overview .platform-metric-control{padding:11px 12px;border:1px solid #e8e0ce;border-radius:12px;background:#faf7ee}
+#section-overview .platform-metric-control select{background:#fffefa;border-color:#ded5c1}
+#section-overview .selected-metric-definition{margin:0 2px 2px;min-height:32px}
+#section-overview .overview-chart-card,#section-overview .overview-country-card{border-color:#e8dfca;border-radius:14px;background:#fffefa}
+#section-overview .overview-card-heading{padding:15px 15px 0}
+#section-overview .overview-card-heading h3{font-size:14px;letter-spacing:-.15px}
+#section-overview .chart-period-tag{font-weight:650}
+#section-overview .overview-country-table th{background:#f4f0e4;padding:10px 9px}
+#section-overview .overview-country-table td{padding:9px;border-top-color:#eee8da}
+#section-overview .overview-country-table tbody tr:hover{background:#f7f5ec}
+#section-overview .barline{border-radius:999px;overflow:hidden}
+#section-overview .monthly-details{border-top-color:#e9e1cf}
+#section-overview .monthly-details summary{padding:8px 3px;color:#315b45}
+#section-overview .metric-info{transition:background .15s ease,transform .15s ease}
+#section-overview .metric-info:hover{background:#e8f2e8;transform:scale(1.06)}
+@media(max-width:1000px){#section-overview .overview-platform-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:760px){#section-overview .overview-intro{padding:20px 17px;border-radius:15px;align-items:flex-start;gap:13px}#section-overview .overview-intro:after{width:170px;height:170px;right:-55px;top:-45px}#section-overview .overview-intro h2{font-size:25px}#section-overview .overview-legend{gap:6px}#section-overview .overview-legend span{padding:6px 9px}#section-overview .overview-platform-head{padding:13px}#section-overview .overview-panel-content{padding:10px;gap:10px}#section-overview .primary-metric{padding:13px}#section-overview .primary-value{font-size:30px}#section-overview .overview-card-heading{padding:12px 11px 0}}
+@media(prefers-reduced-motion:reduce){#section-overview .platform-overview,#section-overview .metric-info{transition:none}#section-overview .platform-overview:hover{transform:none}}
+
 </style>
 </head>
 <body>
